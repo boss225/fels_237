@@ -1,0 +1,31 @@
+@import url("layout.css");
+@import url("site.css");
+@import url("base.css");
+@import url("color.css");
+
+/*login*/
+
+.page-login:before {
+    background-image: url("../storage/upload/login.jpg");
+}
+
+.page-login form {
+    width: 340px;
+    margin: 30px auto;
+}
+
+.page-login form a {
+    margin-left: 20px;
+}
+
+.page-login .has-error .help-block {
+    color: red;
+}
+
+@media (max-width: 767px) {
+    .page-login form {
+        width: auto;
+    }
+}
+
+/*end login*/
