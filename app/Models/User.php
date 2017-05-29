@@ -9,6 +9,12 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $attributes = [
+        'avatar' => '/storage/upload/avatar.jpg',
+        'cover' => '/storage/upload/cover.jpg',
+        'note' => 'Hard working, friendly, helping people',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -62,4 +68,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Word::class);
     }
+
+    public function setPasswordAttribute($value)
+    {
+        return $this->attributes['password'] = bcrypt($value);
+    }
+    
 }
