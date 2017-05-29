@@ -1,0 +1,39 @@
+.page-dark.layout-full {
+    color: #fff;
+    position: relative;
+    z-index: 0;
+}
+
+.page-dark.layout-full::before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-position: center top;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.page-dark.layout-full::after {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: rgba(38, 50, 56, .6);
+}
+
+.page-dark.layout-full .brand {
+    margin-bottom: 22px;
+}
+
+.page-dark.layout-full .brand-text {
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+}

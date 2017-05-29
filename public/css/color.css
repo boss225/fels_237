@@ -1,0 +1,55 @@
+body {
+    color: #76838f;
+    background-color: #f1f1f1;
+}
+
+a {
+    color: #46be8a;
+}
+
+a:hover {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    color: #37474f;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    text-shadow: rgba(0, 0, 0, .15) 0 0 1px;
+}
+
+.page {
+    background: #f1f4f5;
+}
+
+.text-xs-center {
+    text-align: center !important;
+}
+
+.page-dark.layout-full {
+    color: #fff;
+}
+
+.page-dark.layout-full .brand-text {
+    color: #fff;
+}
+
+.form-control {
+    color: #76838f;
+    background-color: #fff;
+    border: 1px solid #e4eaec;
+}
+
+.form-control {
+    border-color: #e4eaec;
+}
+
+.pull-xs-left {
+    float: left !important;
+}
+
+.pull-xs-right {
+    float: right !important;
+}
