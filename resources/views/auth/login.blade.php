@@ -51,5 +51,19 @@
         {{ Form::submit(trans('settings.app.login.btn_login'), ['class' => 'btn btn-primary btn-block']) }}
     {{ Form::close() }}
 
+     <div class="login-social">
+        <div class="btn-group">
+            <a href="{{ action('Auth\SocialAuthController@redirectToProvider', 'facebook') }}" class="btn btn-primary social-facebook">
+                <i class="fa fa-facebook m-r-5"></i> {{ trans('settings.social.facebook') }}
+            </a>
+            <a href="{{ action('Auth\SocialAuthController@redirectToProvider', 'google') }}" class="btn btn-danger social-google">
+                <i class="fa fa-google m-r-5"></i> {{ trans('settings.social.google') }}
+            </a>
+            <a href="{{ action('Auth\SocialAuthController@redirectToProvider', 'twitter') }}" class="btn btn-info social-twitter">
+                <i class="fa fa-twitter m-r-5"></i> {{ trans('settings.social.twitter') }}
+            </a>
+        </div>
+    </div>
+
     <p>{{ trans('settings.app.login.text') }} <a href="{{ action('Auth\RegisterController@showRegistrationForm') }}">{{ trans('settings.title.register') }}</a></p>
 @endsection
