@@ -20,7 +20,7 @@
     <div class="page vertical-align text-xs-center">
         <div class="page-content vertical-align-middle">
             <div class="brand">
-                <img src="/storage/upload/logo.png" alt="e-learning">
+                <img src="/uploads/page/logo.png" alt="e-learning">
                 <h2 class="brand-text">{{ trans('settings.app.brand_text') }}</h2>
             </div>
             @yield('content')

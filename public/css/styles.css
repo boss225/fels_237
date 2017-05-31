@@ -6,7 +6,7 @@
 /*login*/
 
 .page-login:before {
-    background-image: url("../storage/upload/login.jpg");
+    background-image: url("../uploads/page/login.jpg");
 }
 
 .page-login form {
@@ -29,3 +29,21 @@
 }
 
 /*end login*/
+
+/*home*/
+.hidden {
+    display: none;
+}
+
+.help-block strong {
+    color: red;
+}
+
+.profile {
+    margin-bottom: 0;
+}
+
+.userName {
+    text-rendering: optimizelegibility;
+    text-shadow: 0 0 3px rgba(0, 0, 0, .8);
+}

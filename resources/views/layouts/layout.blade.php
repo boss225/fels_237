@@ -11,73 +11,163 @@
     <title>@yield('title')</title>
 
     <!-- Styles -->
-    {{ Html::style('css/app.css') }}
+    {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap.min.css') }}
+    {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css') }}
+    {{ Html::style('css/styles.css') }}
 
 </head>
 <body>
-    <!-- Layout này sẽ còn sửa ở các pull sau -->    
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-inverse nav-bg-gk navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggler collapsed" data-target="#example-navbar-toolbar-1" data-toggle="collapse">
+                    <span class="sr-only"></span>
+                    <i class="fa fa-navicon" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="navbar-toggler collapsed" data-target="#example-navbar-search-1" data-toggle="collapse">
+                    <span class="sr-only"></span>
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img class="brand-img" src="/uploads/page/logo.png" >
+                </a>
+            </div>
+            <div class="collapse navbar-collapse navbar-collapse-toolbar" id="example-navbar-toolbar-1">
+                <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+                    <li class="nav-item">
+                        <a href="wordlist.html" class="nav-link">{{ trans('settings.layout.btn_word') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="lesson.html" class="nav-link">{{ trans('settings.layout.btn_lesson') }}</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link navbar-avatar dropdown-toggle" data-toggle="dropdown" aria-expanded="true" role="button">
+                            <span class="avatar avatar-online">
+                                <img src="{{ Auth::user()->avatar }}" >
+                            </span>
+                            <span class="fullName">{{ Auth::user()->name }}</span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{{ action('User\UserController@edit', auth()->id()) }}" class="dropdown-item">
+                                    <i class="fa fa-user"></i> {{ trans('settings.layout.profile') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ action('Auth\LoginController@logout') }}" class="dropdown-item"
+                                    onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                   <i class="fa fa-lock"></i> {{ trans('settings.title.logout') }}
+                                </a>
+                                {{ Form::open([
+                                    'id' => 'logout-form',
+                                    'action' => 'Auth\LoginController@logout',
+                                    'method' => 'POST',
+                                    'style' => 'display:none',
+                                ]) }}
+                                {{ Form::close() }}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="profile card card-shadow text-xs-center">
+        <div class="card-header card-header-transparent cover overlay">
+            <img class="cover-image" src="{{ Auth::user()->cover }}" >
+            <div class="overlay-panel vertical-align">
+                <div class="vertical-align-middle">
+                    <div class="avatar avatar-100 bg-white m-b-10 m-xs-0 img-bordered">
+                        <img src="{{ Auth::user()->avatar }}" >
+                    </div>
+                    <div class="font-size-20 userName">{{ Auth::user()->name }}</div>
+                    <div class="font-size-20">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="counter">
+                                    <div class="counter-label">{{ trans('settings.layout.followers') }}</div>
+                                    <span class="counter-number">0</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="counter">
+                                    <div class="counter-label">{{ trans('settings.layout.following') }}</div>
+                                    <span class="counter-number">0</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="counter">
+                                    <div class="counter-label">{{ trans('settings.layout.word_memorised') }}</div>
+                                    <span class="counter-number">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <nav class="navbar navbar-inverse bg-blue-grey-700" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                    <button type="button" class="navbar-toggler hamburger hamburger-close collapsed" data-target="#example-navbar-search-overlap-collapse" data-toggle="collapse">
+                        <span class="sr-only"></span>
+                        <span class="hamburger-bar"></span>
                     </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ action('HomeController@index') }}">
-                        {{ trans('settings.layout.brand_text') }}
-                    </a>
+                    <button type="button" class="navbar-toggler collapsed" data-target="#example-navbar-search-overlap" data-toggle="collapse">
+                        <span class="sr-only"></span>
+                        <i class="icon wb-search" aria-hidden="true"></i>
+                    </button>
                 </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
+                <div class="collapse navbar-collapse" id="example-navbar-search-overlap-collapse">
                     <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ action('Auth\LoginController@showLoginForm') }}">{{ trans('settings.title.login') }}</a></li>
-                            <li><a href="{{ action('Auth\RegisterController@showRegistrationForm') }}">{{ trans('settings.title.register') }}</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ action('Auth\LoginController@logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            {{ trans('settings.title.logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ action('Auth\LoginController@logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/">{{ trans('settings.layout.btn_activity') }}</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" aria-expanded="false" data-animation="slide-bottom" role="button">
+                            {{ trans('settings.layout.btn_category') }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </a>
+                            <ul class="dropdown-menu" role="menu">
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="follower.html">{{ trans('settings.layout.followers') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="following.html">{{ trans('settings.layout.following') }}</a>
+                        </li>
+                        @if (Auth::user()->role == config('settings.role_admin'))
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" aria-expanded="false" data-animation="slide-bottom" role="button">
+                                {{ trans('settings.layout.admin_manage') }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="manageAccounts.html" class="dropdown-item">{{ trans('settings.layout.manage_account') }}</a></li>
+                                <li><a href="manageCategories.html" class="dropdown-item">{{ trans('settings.layout.manage_category') }}</a></li>
+                                <li><a href="manageWords.html" class="dropdown-item">{{ trans('settings.layout.manage_word') }}</a></li>
+                                <li><a href="manageLessons.html" class="dropdown-item">{{ trans('settings.layout.manage_lesson') }}</a></li>
+                            </ul>
+                        </li>
                         @endif
                     </ul>
+                    <button type="submit" class="btn btn-primary navbar-right navbar-btn">{{ trans('settings.layout.btn_follow') }}</button>
                 </div>
             </div>
         </nav>
-
+    </div>
+    <div class="container">
         @yield('content')
     </div>
 
     <!-- Scripts -->
-    {{ Html::script('js/app.js') }}
+    {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js') }}
+    {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js') }}
+    {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/js/bootstrap.min.js') }}
+
 </body>
 </html>
 
