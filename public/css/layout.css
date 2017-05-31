@@ -37,3 +37,19 @@
     color: #fff;
     text-transform: uppercase;
 }
+
+.nav-bg-gk {
+    background: #1b2b36 !important;
+}
+
+.quick-search .btn {
+    background: #21394a;
+    border-color: transparent;
+    padding: 0px 15px;
+}
+
+.dropdown-menu {
+    right: 0;
+    left: auto;
+    transition: .25s;
+}

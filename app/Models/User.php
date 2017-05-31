@@ -10,8 +10,8 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $attributes = [
-        'avatar' => '/storage/upload/avatar.jpg',
-        'cover' => '/storage/upload/cover.jpg',
+        'avatar' => '/uploads/page/avatar.jpg',
+        'cover' => '/uploads/page/cover.jpg',
         'note' => 'Hard working, friendly, helping people',
     ];
 

@@ -13,8 +13,12 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->middleware('auth')->name('home');
-
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
 
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/', 'HomeController@index')->name('home');   
+    Route::resource('profile', 'User\UserController', ['only' => ['show', 'edit', 'update']]);
+
+});

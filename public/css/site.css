@@ -82,3 +82,130 @@ body.layout-full {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    white-space: nowrap;
+    border-radius: 1000px;
+}
+
+.avatar-online img {
+    height: 33px !important;
+}
+
+.media-avatar img {
+    height: 42px !important;
+}
+
+.avatar img {
+    width: 100%;
+    max-width: 100%;
+    height: 90px;
+    border: 0 none;
+    border-radius: 50%;
+}
+
+.overlay {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow: hidden;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.cover-image {
+    width: 100%;
+}
+
+.overlay-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    color: #fff;
+}
+
+.avatar-100 {
+    width: 100px;
+}
+
+.counter {
+    text-align: center;
+}
+
+.counter-label {
+    display: block;
+}
+
+.counter>.counter-number {
+    color: #37474f;
+    font-size: 20px;
+}
+
+.panel {
+    position: relative;
+    margin-bottom: 1.875rem;
+    background-color: #fff;
+}
+
+.hamburger-close.hided:before, .hamburger-close.collapsed:before {
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+    transform: rotate(0);
+}
+
+.hamburger:before, .hamburger .hamburger-bar, .hamburger:after {
+    display: block;
+    width: 1em;
+    height: .1em;
+    margin: 0;
+    border-radius: 1px;
+    background: #76838f;
+}
+
+.hamburger:before, .hamburger:after {
+    content: "";
+}
+
+.hamburger .hamburger-bar {
+    margin: .2em 0;
+}
+
+.panel-bordered>.panel-heading {
+    border-bottom: 1px solid #e4eaec;
+}
+
+.panel-heading {
+    position: relative;
+    padding: 0;
+    border-top-right-radius: .214rem;
+    border-top-left-radius: .214rem;
+}
+
+.panel-title {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 20px 30px;
+    font-size: 18px;
+    color: #37474f;
+}
+
+.panel>.list-group .list-group-item {
+    border-width: 1px 0;
+    border-radius: 0;
+}
+
+.panel-body {
+    position: relative;
+    padding: .75rem 1.25rem;
+}
