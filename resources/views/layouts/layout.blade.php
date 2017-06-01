@@ -133,7 +133,7 @@
                         </a>
                             <ul class="dropdown-menu" role="menu">
                             @foreach ($categories as $category)
-                                <li><a href="" class="dropdown-item">{{$category->title}}</a></li>
+                                <li><a href="" class="dropdown-item">{{ $category->title }}</a></li>
                             @endforeach
                             </ul>
                         </li>
@@ -149,7 +149,7 @@
                                 {{ trans('settings.layout.admin_manage') }} <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_account') }}</a></li>
+                                <li><a href="{{ action('Admin\AccountController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_account') }}</a></li>
                                 <li><a href="{{ action('Admin\CategoryController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_category') }}</a></li>
                                 <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_word') }}</a></li>
                                 <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_lesson') }}</a></li>

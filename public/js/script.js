@@ -61,5 +61,23 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(document).on('click', '#deleteUser', function(event) {
+        var id = $(this).data().id;
+        var url = $(this).data().url;
+        var message = $(this).data().msg;
+        if (confirm(message) == true) {
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                data: {'id': id, '_token': _token},
+                success: function(data) {
+                    $('table.table-hover').load(location.href + ' table.table-hover');
+                    alert(data.message);
+                }
+            });
+        }
+    });
+
 });
 
