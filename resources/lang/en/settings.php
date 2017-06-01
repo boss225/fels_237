@@ -56,7 +56,17 @@ return [
             'profile_avatar' => 'Avatar',
             'profile_cover' => 'Cover',
             'btn_save' => 'Save Change',
-        ]
+        ],
+        'admin' => [
+            'title_category' => 'Title',
+            'question_number_category' => 'Question Number',
+            'number_word_category' => 'Number Word',
+            'created_category' => 'Created At',
+            'action' => 'Action',
+            'btn_add' => 'Add',
+            'btn_addNew' => 'Add New',
+            'btn_saveChange' => 'Save Change',           
+        ],
     ],
     'social' => [
         'google' => 'Google',
@@ -70,5 +80,9 @@ return [
         'reset_password' => 'Reset Password',
         'homepage' => 'Home E-Learning',
         'profile' => 'Profile',
+        'manage_category' => 'Manage Categories',
     ],
+    'confirm_message' => 'Are you sure ?',
+    'success_message' => 'success !',
+    'error_message' => 'error !',
 ];
