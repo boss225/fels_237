@@ -87,13 +87,13 @@
                             <div class="col-xs-4">
                                 <div class="counter">
                                     <div class="counter-label">{{ trans('settings.layout.followers') }}</div>
-                                    <span class="counter-number">0</span>
+                                    <span class="counter-number">{{ $followers }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="counter">
                                     <div class="counter-label">{{ trans('settings.layout.following') }}</div>
-                                    <span class="counter-number">0</span>
+                                    <span class="counter-number">{{ $followings }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-4">
@@ -132,6 +132,9 @@
                             {{ trans('settings.layout.btn_category') }} <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </a>
                             <ul class="dropdown-menu" role="menu">
+                            @foreach ($categories as $category)
+                                <li><a href="" class="dropdown-item">{{$category->title}}</a></li>
+                            @endforeach
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -146,10 +149,10 @@
                                 {{ trans('settings.layout.admin_manage') }} <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="manageAccounts.html" class="dropdown-item">{{ trans('settings.layout.manage_account') }}</a></li>
-                                <li><a href="manageCategories.html" class="dropdown-item">{{ trans('settings.layout.manage_category') }}</a></li>
-                                <li><a href="manageWords.html" class="dropdown-item">{{ trans('settings.layout.manage_word') }}</a></li>
-                                <li><a href="manageLessons.html" class="dropdown-item">{{ trans('settings.layout.manage_lesson') }}</a></li>
+                                <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_account') }}</a></li>
+                                <li><a href="{{ action('Admin\CategoryController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_category') }}</a></li>
+                                <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_word') }}</a></li>
+                                <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_lesson') }}</a></li>
                             </ul>
                         </li>
                         @endif
@@ -167,7 +170,7 @@
     {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js') }}
     {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js') }}
     {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/js/bootstrap.min.js') }}
-
+    {{ Html::script('js/script.js') }}
 </body>
 </html>
 

@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Category;
+use App\Models\Relationship;
+use Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('layouts.layout', function($view) {
+            $categories = Category::all();
+            $numberFollowers = Auth::user()->followers()->count();
+            $numberFollowings = Auth::user()->followings()->count();
+            $view->with('categories', $categories);
+            $view->with('followers', $numberFollowers);
+            $view->with('followings', $numberFollowings);
+        });
     }
 
     /**

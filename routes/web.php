@@ -21,4 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');   
     Route::resource('profile', 'User\UserController', ['only' => ['show', 'edit', 'update']]);
 
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+        Route::resource('categories', 'Admin\CategoryController', ['expect' => ['show', 'edit', 'create']]);
+    });
 });
