@@ -23,5 +23,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::resource('categories', 'Admin\CategoryController', ['expect' => ['show', 'edit', 'create']]);
+        Route::resource('accounts', 'Admin\AccountController', ['only' => ['index', 'destroy']]);
     });
 });
