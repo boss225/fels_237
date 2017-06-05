@@ -20,9 +20,11 @@ class AppServiceProvider extends ServiceProvider
             $categories = Category::all();
             $numberFollowers = Auth::user()->followers()->count();
             $numberFollowings = Auth::user()->followings()->count();
+            $memoriedWord = Auth::user()->words()->count();
             $view->with('categories', $categories);
             $view->with('followers', $numberFollowers);
             $view->with('followings', $numberFollowings);
+            $view->with('memoriedWord', $memoriedWord);
         });
     }
 

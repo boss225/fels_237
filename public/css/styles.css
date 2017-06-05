@@ -47,3 +47,56 @@
     text-rendering: optimizelegibility;
     text-shadow: 0 0 3px rgba(0, 0, 0, .8);
 }
+
+.popover {
+    max-width: 100%;
+}
+
+.memorised, .memorised:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: red;
+}
+
+.input-word-group .form-control{
+    width:50% !important;
+}
+
+.form-control {
+    height: 2.573rem !important;
+}
+
+ul.pagination {
+    text-align: center;
+    width: 100%;
+}
+
+ul.pagination > li {
+    display: inline;
+}
+
+ul.pagination > li > a:hover {
+    color: #89bceb;
+    border-color: #e4eaec;
+    background-color: #f3f7f9;
+}
+
+ul.pagination > li.active > span {
+    z-index: 2;
+    cursor: default;
+    color: #fff;
+    border-color: #62a8ea;
+    background-color: #62a8ea;
+}
+
+ul.pagination > li > a, ul.pagination > li > span {
+    text-decoration: none;
+    color: #76838f;
+    border: 1px solid #e4eaec;
+    background-color: transparent;
+    padding: 10px 15px;
+}
+
+ul.pagination > li.active > span, .disabled {
+    cursor: not-allowed;
+}

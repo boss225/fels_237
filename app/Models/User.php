@@ -71,7 +71,7 @@ class User extends Authenticatable
 
     public function words()
     {
-        return $this->belongsToMany(Word::class);
+        return $this->belongsToMany(Word::class, 'user_word', 'user_id', 'word_id');
     }
 
     public function setPasswordAttribute($value)
