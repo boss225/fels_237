@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($items)
+                @if (!empty($items))
                     @foreach ($items as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -53,7 +53,7 @@
                         </tr>
                     @endforeach
                 @else
-                    <tr>{{ trans('settings.empty_message') }}</tr>
+                    <tr><td colspan="6">{{ trans('settings.empty_message') }}</td></tr>
                 @endif
             </tbody>
         </table>

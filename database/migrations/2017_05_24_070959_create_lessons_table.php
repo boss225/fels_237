@@ -23,12 +23,10 @@ class CreateLessonsTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
             $table->foreign('test_id')
                 ->references('id')
-                ->on('tests')
-                ->onDelete('cascade');
+                ->on('tests');
         });
     }
 

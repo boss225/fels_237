@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
+    use \Znck\Eloquent\Traits\BelongsToThrough;
+    
     protected $fillable = [
         'user_id',
         'test_id',
@@ -15,11 +17,16 @@ class Lesson extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->select(['id', 'name']);
     }
 
     public function test()
     {
-        return $this->belongsTo(Test::class);
+        return $this->belongsTo(Test::class)->select(['id', 'question_number']);
+    }
+
+    public function category()
+    {
+        return $this->belongsToThrough(Category::class, Test::class);
     }
 }

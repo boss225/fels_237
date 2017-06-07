@@ -15,4 +15,9 @@ return [
         'asc' => 'ASC',
         'desc' => 'DESC',
     ],
+    'lesson' => [
+        'default_result' => 0,
+        'default_time' => '00:00:00',
+    ],
+    'message_fail' => 'Create Lesson Fail!',
 ];

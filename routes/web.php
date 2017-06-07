@@ -18,15 +18,22 @@ Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProvider
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', 'HomeController@index')->name('home');   
-    Route::resource('profile', 'User\UserController', ['only' => ['show', 'edit', 'update']]);
-    Route::get('word/list', 'User\WordController@showList');
-    Route::post('word/filter', 'User\WordController@wordsFilter');
+    Route::get('/', 'HomeController@index')->name('home');  
 
-    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-        Route::resource('categories', 'Admin\CategoryController', ['expect' => ['show', 'edit', 'create']]);
-        Route::resource('accounts', 'Admin\AccountController', ['only' => ['index', 'destroy']]);
-        Route::resource('word-list', 'Admin\WordController');
-        Route::get('word-content', 'Admin\WordController@wordContent');        
+    Route::group(['namespace' => 'User'], function () {
+        Route::resource('profile', 'UserController', ['only' => ['show', 'edit', 'update']]);
+        Route::get('word/list', 'WordController@showList');
+        Route::post('word/filter', 'WordController@wordsFilter');
+        Route::get('word/category/{id}', 'WordController@wordsCategory');
+        Route::post('word/category/{id}/filter', 'WordController@wordsCategoryFilter');
+        Route::resource('lesson', 'LessonController', ['only' => ['index', 'store']]);
+    });
+
+    Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
+        Route::resource('categories', 'CategoryController', ['expect' => ['show', 'edit', 'create']]);
+        Route::resource('accounts', 'AccountController', ['only' => ['index', 'destroy']]);
+        Route::resource('word-list', 'WordController');
+        Route::resource('lesson', 'LessonController', ['only' => ['index', 'destroy']]);
+        Route::get('word-content', 'WordController@wordContent');        
     });
 });
