@@ -15,7 +15,7 @@
                     <th>{{ trans('settings.layout.admin.id_account') }}</th>
                     <th>{{ trans('settings.layout.admin.name_account') }}</th>
                     <th>{{ trans('settings.layout.admin.email_account') }}</th>
-                    <th>{{ trans('settings.layout.admin.create_account') }}</th>
+                    <th>{{ trans('settings.layout.admin.create_at') }}</th>
                     <th>{{ trans('settings.layout.admin.role_account') }}</th>
                     <th>{{ trans('settings.layout.admin.action') }}</th>
                 </tr>

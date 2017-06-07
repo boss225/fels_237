@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse navbar-collapse-toolbar" id="example-navbar-toolbar-1">
                 <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
                     <li class="nav-item">
-                        <a href="wordlist.html" class="nav-link">{{ trans('settings.layout.btn_word') }}</a>
+                        <a href="{{ action('User\WordController@showList') }}" class="nav-link">{{ trans('settings.layout.btn_word') }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="lesson.html" class="nav-link">{{ trans('settings.layout.btn_lesson') }}</a>
@@ -99,7 +99,7 @@
                             <div class="col-xs-4">
                                 <div class="counter">
                                     <div class="counter-label">{{ trans('settings.layout.word_memorised') }}</div>
-                                    <span class="counter-number">0</span>
+                                    <span class="counter-number">{{ $memoriedWord }}</span>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ action('Admin\AccountController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_account') }}</a></li>
                                 <li><a href="{{ action('Admin\CategoryController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_category') }}</a></li>
-                                <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_word') }}</a></li>
+                                <li><a href="{{ action('Admin\WordController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_word') }}</a></li>
                                 <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_lesson') }}</a></li>
                             </ul>
                         </li>

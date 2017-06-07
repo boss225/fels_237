@@ -65,8 +65,10 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .input-group-addon {
-    color: white;
     font-weight: 300;
+    color: #76838f;
+    background-color: #f3f7f9;
+    border: 1px solid #e4eaec;
 }
 
 .navbar-default .navbar-toolbar .nav-link {
