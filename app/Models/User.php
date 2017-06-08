@@ -49,9 +49,14 @@ class User extends Authenticatable
         return $this->hasMany(Activity::class);
     }
 
+    public function relationships()
+    {
+        return $this->belongsToMany(User::class, 'relationships', 'target_id', 'user_id')->where('user_id', auth()->user()->id);
+    }
+
     public function followings()
     {
-        return $this->belongsToMany(User::class, 'relationships', 'user_id', 'target_id');
+        return $this->belongsToMany(User::class, 'relationships', 'user_id', 'target_id')->withTimestamps();
     }
 
     public function followers()

@@ -26,11 +26,14 @@ return [
         ],
     ],
     'layout' => [
+        'exam_date' => 'Exam date',
         'btn_word' => 'Word List',
         'btn_lesson' => 'Start Lesson',
         'btn_activity' => 'Activities',
         'btn_category' => 'Categories',
-        'btn_follow' => 'follow',
+        'btn_follow' => 'Follow',
+        'btn_unFollow' => 'Unfollow',
+        'btn_finish' => 'Finish',
         'profile' => 'Profile',
         'followers' => 'Followers',
         'following' => 'Following',
@@ -97,6 +100,7 @@ return [
         'twitter' => 'Twitter',
     ],
     'title' => [
+        'search_user' => 'Search User',
         'login' => 'Login',
         'register' => 'Register',
         'logout' => 'Logout',

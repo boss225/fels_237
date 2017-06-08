@@ -57,24 +57,28 @@
                 </tr>
             </thead>
             <tbody>
-            @if (empty($lessons))
+            @forelse ($lessons as $lesson)
+                <tr>
+                    <td>{{ $lesson->created_at->format('Y-m-d G:i a') }}</td>
+                    <td>{{ $lesson->category->title }}</td>
+                    <td>{{ $lesson->test->question_number }}</td>
+                    <td>{{ $lesson->spent_time }}</td>
+                    <td>{{ $lesson->result }}/{{ $lesson->test->question_number }}</td>
+                    <td>
+                    @if ($lesson->result == config('settings.lesson.default_result') || $lesson->spent_time == config('settings.lesson.default_time'))
+                        <a href="{{ action('User\LessonController@show', $lesson->id) }}" class="btn btn-primary btn-sm">
+                            {{ trans('settings.layout.user.btn_start') }}
+                        </a>
+                    @else
+                        <a class="btn btn-primary btn-sm disabled">
+                            {{ trans('settings.layout.user.btn_start') }}
+                        </a>
+                    @endif
+                    </td>
+                </tr>
+            @empty
                 <tr><td colspan="5">{{ trans('settings.empty_message') }}</td></tr>
-            @else
-                @foreach ($lessons as $lesson)
-                    <tr>
-                        <td>{{ $lesson->created_at }}</td>
-                        <td>{{ $lesson->category->title }}</td>
-                        <td>{{ $lesson->test->question_number }}</td>
-                        <td>{{ $lesson->spent_time }}</td>
-                        <td>{{ $lesson->result }}/{{ $lesson->test->question_number }}</td>
-                        <td>
-                            <a href="" class="btn btn-primary btn-sm">
-                                {{ trans('settings.layout.user.btn_start') }}
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            @endif
+            @endforelse
             </tbody>
         </table>
         {{ $lessons->links() }}

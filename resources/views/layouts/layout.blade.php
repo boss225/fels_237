@@ -32,6 +32,27 @@
                     <img class="brand-img" src="/uploads/page/logo.png" >
                 </a>
             </div>
+            <div class="collapse navbar-search navbar-left">
+                {{ Form::open([
+                    'action' => 'User\UserController@searchUser',
+                    'class' => 'navbar-form form-inline quick-search',
+                    'role' => 'form',
+                ]) }}
+                    <div class="input-group">
+                        {{ Form::text('search', old('search'), [
+                            'class' => 'form-control',
+                            'id' => 'search',
+                            'placeholder' => "Search user or email",
+                        ]) }}
+                        <div class="input-group-addon">
+                            {{ Form::button('<span class="fa fa-2x fa-angle-double-right"></span>', [
+                                'type' => 'submit', 
+                                'class' => 'btn',
+                            ]) }}
+                        </div>
+                    </div>
+                {{ Form::close() }}
+            </div>
             <div class="collapse navbar-collapse navbar-collapse-toolbar" id="example-navbar-toolbar-1">
                 <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
                     <li class="nav-item">
@@ -93,7 +114,7 @@
                             <div class="col-xs-4">
                                 <div class="counter">
                                     <div class="counter-label">{{ trans('settings.layout.following') }}</div>
-                                    <span class="counter-number">{{ $followings }}</span>
+                                    <span class="counter-number following">{{ $followings }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-4">
@@ -138,10 +159,10 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="follower.html">{{ trans('settings.layout.followers') }}</a>
+                            <a class="nav-link" href="{{ action('User\UserController@followers') }}">{{ trans('settings.layout.followers') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="following.html">{{ trans('settings.layout.following') }}</a>
+                            <a class="nav-link" href="{{ action('User\UserController@following') }}">{{ trans('settings.layout.following') }}</a>
                         </li>
                         @if (Auth::user()->role == config('settings.role_admin'))
                         <li class="nav-item dropdown">
@@ -157,7 +178,6 @@
                         </li>
                         @endif
                     </ul>
-                    <button type="submit" class="btn btn-primary navbar-right navbar-btn">{{ trans('settings.layout.btn_follow') }}</button>
                 </div>
             </div>
         </nav>

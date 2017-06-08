@@ -51,7 +51,7 @@ class WordController extends Controller
         return view('user.word.filter', compact('words', 'categories', 'filterArrange', 'filterOption', 'filterKey'));
     }
 
-    public function filter($inputs)
+    protected function filter($inputs)
     {
         if (!isset($inputs['category_id'])) {
            $categories = Category::all()->pluck('id');

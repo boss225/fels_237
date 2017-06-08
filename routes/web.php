@@ -22,11 +22,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'User'], function () {
         Route::resource('profile', 'UserController', ['only' => ['show', 'edit', 'update']]);
+        Route::post('search/user','UserController@searchUser');        
         Route::get('word/list', 'WordController@showList');
         Route::post('word/filter', 'WordController@wordsFilter');
         Route::get('word/category/{id}', 'WordController@wordsCategory');
         Route::post('word/category/{id}/filter', 'WordController@wordsCategoryFilter');
-        Route::resource('lesson', 'LessonController', ['only' => ['index', 'store']]);
+        Route::resource('lesson', 'LessonController', ['only' => ['index', 'store', 'show', 'update']]);
+        Route::get('followers', 'UserController@followers'); 
+        Route::get('following', 'UserController@following');
+        Route::post('add/follow', 'UserController@addRelationship'); 
     });
 
     Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {

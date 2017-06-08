@@ -20,4 +20,8 @@ return [
         'default_time' => '00:00:00',
     ],
     'message_fail' => 'Create Lesson Fail!',
+    'action' => [
+        'add' => 'add',
+        'remove' => 'remove',
+    ],
 ];

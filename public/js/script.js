@@ -260,5 +260,37 @@ $(document).ready(function() {
             });
         }
     });
+
+    //follow
+    $('button#userFollow').on('click', function () {
+        var self = $(this);
+        var id = self.data().id;
+        var url = self.data().url;
+        var title = self.attr('data-title').trim();
+        var titleNew = self.text().trim();
+        var count_following = parseInt($('.counter-number.following').text().trim());
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {'id': id, '_token': _token},
+            success : function (data) {
+                if (data.status) {
+                    if (data.result == 'add') {
+                        self.removeClass('btn-primary')
+                            .addClass('btn-success')
+                            .attr('data-title', titleNew)
+                            .text(title);
+                        $('.counter-number.following').text(++count_following);
+                    } else {
+                        self.removeClass('btn-success')
+                            .addClass('btn-primary')
+                            .attr('data-title', titleNew)
+                            .text(title);
+                        $('.counter-number.following').text(--count_following);
+                    }
+                }
+            },
+        });
+    });
 });
 

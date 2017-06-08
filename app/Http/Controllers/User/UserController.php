@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use App\Models\User;
 use Auth;
 use File;
 
@@ -57,4 +58,58 @@ class UserController extends Controller
         return $fileName;
     }
 
+    public function searchUser(Request $request)
+    {
+        if (!isset($request->search)) {
+           $users = User::whereNotIn('id', [Auth::user()->id])
+                ->with('relationships')
+                ->paginate(config('settings.paginate_number'));
+        } else {
+           $users = User::where('name', 'like', '%' . $request->search . '%')
+                ->with('relationships')
+                ->orWhere('email', 'like', '%' . $request->search . '%')
+                ->whereNotIn('id', [Auth::user()->id])
+                ->paginate(config('settings.paginate_number'));
+        }
+
+        return view('user.profile.user', compact('users'));
+    }
+
+    public function followers()
+    {
+        $followers = Auth::user()->followers()->paginate(config('settings.paginate_number'));
+
+        return view('user.relationship.follower', compact('followers'));
+    }
+
+    public function following()
+    {
+        $followings = Auth::user()->followings()->paginate(config('settings.paginate_number'));
+
+        return view('user.relationship.following', compact('followings'));
+    }
+
+    public function addRelationship(Request $request)
+    {   
+        if (!$request->ajax()) {
+            return response()->json([
+                'status' => 'false',
+            ]);
+        }
+
+        $user = Auth::user()->followings();
+
+        if ($user->get()->contains('id', $request->id)) {
+            $user->detach($request->id);
+            $result = config('settings.action.remove');
+        } else {
+            $user->attach($request->id);
+            $result = config('settings.action.add');
+        }
+
+        return response()->json([
+            'status' => 'true',
+            'result' => $result,
+        ]);
+    }      
 }
