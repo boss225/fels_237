@@ -38,7 +38,7 @@
                         <a href="{{ action('User\WordController@showList') }}" class="nav-link">{{ trans('settings.layout.btn_word') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="lesson.html" class="nav-link">{{ trans('settings.layout.btn_lesson') }}</a>
+                        <a href="{{ action('User\LessonController@index') }}" class="nav-link">{{ trans('settings.layout.btn_lesson') }}</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link navbar-avatar dropdown-toggle" data-toggle="dropdown" aria-expanded="true" role="button">
@@ -133,7 +133,7 @@
                         </a>
                             <ul class="dropdown-menu" role="menu">
                             @foreach ($categories as $category)
-                                <li><a href="" class="dropdown-item">{{ $category->title }}</a></li>
+                                <li><a href="{{ action('User\WordController@wordsCategory', $category->id) }}" class="dropdown-item">{{ $category->title }}</a></li>
                             @endforeach
                             </ul>
                         </li>
@@ -152,7 +152,7 @@
                                 <li><a href="{{ action('Admin\AccountController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_account') }}</a></li>
                                 <li><a href="{{ action('Admin\CategoryController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_category') }}</a></li>
                                 <li><a href="{{ action('Admin\WordController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_word') }}</a></li>
-                                <li><a href="" class="dropdown-item">{{ trans('settings.layout.manage_lesson') }}</a></li>
+                                <li><a href="{{ action('Admin\LessonController@index') }}" class="dropdown-item">{{ trans('settings.layout.manage_lesson') }}</a></li>
                             </ul>
                         </li>
                         @endif
