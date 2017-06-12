@@ -14,6 +14,11 @@ body.layout-full {
     height: 100%;
 }
 
+.overflow {
+    height: 365px;
+    overflow: auto;
+}
+
 .page {
     position: relative;
     min-height: -webkit-calc(100% - 44px);

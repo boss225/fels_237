@@ -15,6 +15,7 @@ Auth::routes();
 
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+Route::get('404', 'HomeController@error404'); 
 
 Route::group(['middleware' => 'auth'], function () {
 

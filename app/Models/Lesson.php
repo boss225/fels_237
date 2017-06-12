@@ -29,4 +29,9 @@ class Lesson extends Model
     {
         return $this->belongsToThrough(Category::class, Test::class);
     }
+
+    public function activity()
+    {
+        return $this->hasOne(Activity::class, 'action_id');
+    }
 }
