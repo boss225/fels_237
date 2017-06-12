@@ -7,7 +7,7 @@
 @section('content') 
     <div class="panel panel-bordered panel-dark">
         <div class="panel-heading text-xs-center">
-            <h3 class="panel-title">{{ trans('settings.layout.user.word_title') }} {{ Request::route('id') ? '- '.$categories->title : null }}</h3>
+            <h3 class="panel-title">{{ trans('settings.layout.user.word_title') }} {{ Request::route('id') ? '- ' . $categories->title : null }}</h3>
         </div>
         <ul class="list-group list-group-bordered">
             <li class="list-group-item">
@@ -46,21 +46,19 @@
                     </div>                                    
                 {{ Form::close() }}
             </li>
-            @if (empty($words))
+            @forelse ($words as $word)
+                <li class="list-group-item">
+                    <a class="learned {{ $word->users->count() > 0 ? 'memorised' : '' }}" tabindex="0" data-html="true"
+                        data-toggle="popover" 
+                        data-trigger="focus" 
+                        title="Meaning:" 
+                        data-content='{{ $word->description ?: null }}'>
+                        <i class="fa {{ $word->users->count() > 0 ? 'fa-check-circle' : 'fa-info-circle' }} m-r-5"></i> {{ $word->word }} : {{ $word->answer }}
+                    </a>
+                </li>            
+            @empty
                 <li class="list-group-item">{{ trans('settings.empty_message') }}</li>
-            @else  
-                @foreach ($words as $word)
-                    <li class="list-group-item">
-                        <a class="learned {{ $word->users->count() > 0 ? 'memorised' : '' }}" tabindex="0" data-html="true"
-                            data-toggle="popover" 
-                            data-trigger="focus" 
-                            title="Meaning:" 
-                            data-content='{{ $word->description ?: null }}'>
-                            <i class="fa {{ $word->users->count() > 0 ? 'fa-check-circle' : 'fa-info-circle' }} m-r-5"></i> {{ $word->word }} : {{ $word->answer }}
-                        </a>
-                    </li>            
-                @endforeach
-            @endif
+            @endforelse
         </ul>
         {{ $words->links() }}
     </div>

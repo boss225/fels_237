@@ -99,6 +99,10 @@ body.layout-full {
     height: 42px !important;
 }
 
+.media-img img {
+    width: 50px;
+}
+
 .avatar img {
     width: 100%;
     max-width: 100%;
@@ -220,4 +224,20 @@ body.layout-full {
     transform: translate(0,-50%);
     margin: auto;
     z-index: 1;
+}
+
+.panel-line.panel-primary .panel-heading {
+    color: #62a8ea;
+    border-top-color: #62a8ea;
+    background: transparent;
+}
+
+.panel-line .panel-heading {
+    background: transparent;
+    border: none;
+    border-top: 3px solid transparent;
+}
+
+.panel-line.panel-primary .panel-title {
+    color: #62a8ea;
 }
