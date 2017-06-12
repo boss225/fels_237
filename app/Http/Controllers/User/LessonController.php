@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Category;
 use App\Models\Lesson;
 use App\Models\Word;
+use App\Models\Activity;
 use Auth;
 use Carbon\Carbon;
 
@@ -47,7 +48,7 @@ class LessonController extends Controller
     {
         $lesson = Lesson::where('id', $id)->with('category', 'test')->first();
         if (!isset($lesson) || $lesson->result) {
-            return redirect()->action('User\LessonController@index');
+            return redirect()->action('HomeController@error404');
         }
 
         $createdAt = $lesson->created_at->format('Y-m-d G:i a');
@@ -75,13 +76,14 @@ class LessonController extends Controller
         $minutes = $start->diffInMinutes($end);
         $seconds = $start->diffInSeconds($end);
         $spentTime = Carbon::createFromTime($hours, $minutes, $seconds)->toTimeString();
-        $result = config('settings.lesson.default_result');
+        $result = $memories = config('settings.lesson.default_result');
         $words = Word::with('users')->get();
 
         foreach ($words as $word) {
             if (isset($input['word'][$word->id]) && $word->answer == $input['word'][$word->id]) {
                 if ($word->users->isEmpty()) {
                     $word->users()->attach(Auth::user()->id);
+                    ++$memories; 
                 } 
 
                 ++$result;                
@@ -99,6 +101,37 @@ class LessonController extends Controller
             'result' => $result,
         ]);
 
+        if ($result != config('settings.lesson.default_result')) {
+            $inputActivities = [
+                'user_id' => Auth::user()->id,
+                'action_type' => 'lesson_' . $memories,
+            ];
+            $lesson->activity()->create($inputActivities);
+        }
+
+        $activityCategory = $this->addActivityCategory($lesson);
+
         return redirect()->action('User\LessonController@index');
+    }
+
+    protected function addActivityCategory($lesson)
+    {
+        $categoryId = $lesson->category()->first()->id;
+        $learnedCategory = Auth::user()->words()->with('users')->where('category_id', $categoryId)->count();
+        $wordCategory = Word::where('category_id', $categoryId)->count();
+        $activityCategory = Auth::user()
+            ->activities()
+            ->where([ ['action_type', 'category'], ['action_id', $categoryId] ])
+            ->first();
+    
+        if (!$activityCategory && $learnedCategory == $wordCategory) {
+            $inputActivities = [
+                'user_id' => Auth::user()->id,
+                'action_id' => $categoryId,
+                'action_type' => config('settings.action.type_category'),
+            ];
+            Activity::create($inputActivities);
+        }
+
     }
 }

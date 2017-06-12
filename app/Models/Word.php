@@ -21,7 +21,8 @@ class Word extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_word', 'word_id', 'user_id')
-            ->where('user_id', auth()->user()->id);
+            ->where('user_id', auth()->user()->id)
+            ->withTimestamps();
     }
 
     public function category()
