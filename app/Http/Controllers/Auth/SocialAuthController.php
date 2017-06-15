@@ -21,7 +21,7 @@ class SocialAuthController extends Controller
     {
         try {
             $user = Socialite::driver($provider)->user();          
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return redirect('/');
         }
         $authUser = $this->createOrGetUser($user, $provider);        

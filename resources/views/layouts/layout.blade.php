@@ -13,6 +13,7 @@
     <!-- Styles -->
     {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap.min.css') }}
     {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css') }}
+    {{ Html::style('https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css') }}
     {{ Html::style('css/styles.css') }}
 
 </head>
@@ -55,10 +56,10 @@
             </div>
             <div class="collapse navbar-collapse navbar-collapse-toolbar" id="example-navbar-toolbar-1">
                 <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
-                    <li class="nav-item">
+                    <li class="nav-item {{ setActive(action('User\WordController@showList')) }}">
                         <a href="{{ action('User\WordController@showList') }}" class="nav-link">{{ trans('settings.layout.btn_word') }}</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ setActive(action('User\LessonController@index')) }}">
                         <a href="{{ action('User\LessonController@index') }}" class="nav-link">{{ trans('settings.layout.btn_lesson') }}</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -145,8 +146,8 @@
                 </div>
                 <div class="collapse navbar-collapse" id="example-navbar-search-overlap-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/">{{ trans('settings.layout.btn_activity') }}</a>
+                        <li class="nav-item {{ setActive(action('HomeController@index')) }}">
+                            <a class="nav-link" href="/">{{ trans('settings.layout.btn_activity') }}</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" data-toggle="dropdown" aria-expanded="false" data-animation="slide-bottom" role="button">
@@ -158,10 +159,10 @@
                             @endforeach
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ setActive(action('User\UserController@followers')) }}">
                             <a class="nav-link" href="{{ action('User\UserController@followers') }}">{{ trans('settings.layout.followers') }}</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ setActive(action('User\UserController@following')) }}">
                             <a class="nav-link" href="{{ action('User\UserController@following') }}">{{ trans('settings.layout.following') }}</a>
                         </li>
                         @if (Auth::user()->role == config('settings.role_admin'))
@@ -190,6 +191,8 @@
     {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js') }}
     {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js') }}
     {{ Html::script('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/js/bootstrap.min.js') }}
+    {{ Html::script('http://bootstrap-notify.remabledesigns.com/js/bootstrap-notify.min.js') }}
+    {{ Html::script('https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js') }}
     {{ Html::script('js/script.js') }}
 </body>
 </html>

@@ -10,12 +10,6 @@
             <h3 class="panel-title">{{ trans('settings.layout.user.lesson_title') }}</h3>
         </div>
         <div class="panel-body">
-            @if (!empty(session('status')))
-                <div class="alert alert-{{ session('status') }}">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('message') }}
-                </div>
-            @endif
             {{ Form::open([
                 'class' => 'form-horizontal',
                 'role' => 'form',
@@ -43,6 +37,12 @@
                     
             {{ Form::close() }}
             <hr>
+            @if (!empty(session('status')))
+                <div class="alert alert-{{ session('status') }}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ session('message') }}
+                </div>
+            @endif
             <h3>{{ trans('settings.layout.user.lesson_list') }}</h3>
         </div>
         <table class="table table-hover">
@@ -65,7 +65,7 @@
                     <td>{{ $lesson->spent_time }}</td>
                     <td>{{ $lesson->result }}/{{ $lesson->test->question_number }}</td>
                     <td>
-                    @if ($lesson->result == config('settings.lesson.default_result') || $lesson->spent_time == config('settings.lesson.default_time'))
+                    @if ($lesson->result == config('settings.lesson.default_result') && $lesson->spent_time == config('settings.lesson.default_time'))
                         <a href="{{ action('User\LessonController@show', $lesson->id) }}" class="btn btn-primary btn-sm">
                             {{ trans('settings.layout.user.btn_start') }}
                         </a>

@@ -9,7 +9,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">{{ trans('settings.title.manage_lesson') }}</h3>
         </div>
-        <table class="table table-hover">
+        <table class="table table-hover" id="dataTable">
             <thead>
                 <tr class="table-info">
                     <th>{{ trans('settings.layout.admin.name_account') }}</th>                
@@ -40,7 +40,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $lessons->links() }}
     </div>
 @endsection
 

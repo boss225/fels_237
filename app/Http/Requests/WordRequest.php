@@ -15,6 +15,7 @@ class WordRequest extends FormRequest
     {
         return [
             'category_id' => 'required',
+            'check_answer' => 'required',
             'word' => 'required|max:255',
             'answer.*' => 'required|max:150',
         ];
