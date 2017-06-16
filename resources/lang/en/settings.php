@@ -114,6 +114,8 @@ return [
         'choice_category' => '-- Choice category --',        
         'manage_account' => 'Manage Accounts',
         'manage_word' => 'Manage Word List',
+        'manage_edit_word' => 'Edit Word',
+        'manage_new_word' => 'Add New Word',
         'manage_lesson' => 'Manage Lesson',
     ],
     'home' => [
@@ -132,6 +134,7 @@ return [
     ],
     'confirm_message' => 'Are you sure ?',
     'success_message' => 'success !',
+    'complete_message' => 'Complete the test !',
     'error_message' => 'error !',
     'empty_message' => 'no more !',
 ];

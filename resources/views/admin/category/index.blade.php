@@ -14,7 +14,7 @@
                 </button>
             </div>
         </div>
-        <table class="table table-hover">
+        <table class="table table-hover" id="dataTable">
             <thead>
                 <tr class="table-info">
                     <th></th>
@@ -53,7 +53,7 @@
         </table>
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade modal-category" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

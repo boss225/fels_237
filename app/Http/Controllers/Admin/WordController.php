@@ -15,7 +15,7 @@ class WordController extends Controller
 {
     public function index()
     {
-        $items = Word::with('options')->with('category')->paginate(config('settings.paginate_number'));
+        $items = Word::with('options')->with('category')->get();
         $categories = Category::pluck('title', 'id')->toArray();
 
         return view('admin.wordlist.index', [
@@ -24,17 +24,22 @@ class WordController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        $categories = Category::pluck('title', 'id')->toArray();
+
+        return view('admin.wordlist.create', compact('categories'));
+    }
+
     public function store(WordRequest $request)
     {
-        if (!$request->ajax()) {
-            return response()->json([
-                'message' => trans('settings.error_message'),
-            ]);
-        }
+        $inputs = $request->only('answer', 'category_id', 'word', 'description', 'check_answer');
 
-        $inputs = $request->only('options', 'category_id', 'word', 'description', 'answer');
+        foreach ($inputs['answer'] as $index => $option) {
+            if ($index == $inputs['check_answer']) {
+                $inputs['check_answer'] = $option;
+            }
 
-        foreach ($inputs['options'] as $option) {
             $ans[] = [
                 'option' => $option,
             ];
@@ -44,35 +49,48 @@ class WordController extends Controller
             'category_id' => $inputs['category_id'],
             'word' => $inputs['word'],
             'description' => $inputs['description'],
-            'answer' => $inputs['answer'],
+            'answer' => $inputs['check_answer'],
         ])->options()->createMany($ans);
 
         if (!$word) {
-            return response()->json([
-                'message' => trans('settings.error_message'),
-            ]);
+            return redirect()->back()
+                ->with('status', 'danger')
+                ->with('message', trans('settings.error_message'));
         }
 
-        return response()->json([
-            'message' => trans('settings.success_message'),
-        ]);
+        return redirect()->action('Admin\WordController@index')
+            ->with('status', 'success')
+            ->with('message', trans('settings.success_message'));
     }
 
-    public function update(WordRequest $request)
+    public function edit($id)
     {
-        if (!$request->ajax()) {
-            return response()->json([
-                'message' => trans('settings.error_message'),
-            ]);
+        $word = Word::find($id);
+        if (!$word) {
+            return redirect()->action('HomeController@error404');
         }
 
-        $inputs = $request->only('id', 'options', 'category_id', 'word', 'description', 'answer', 'idOptions');
+        $categories = Category::pluck('title', 'id')->toArray();
+        $answers = Option::where('word_id', $id)->get();
 
-        $answerId = Word::find($inputs['id'])->options()->get()->pluck('id');
+        return view('admin.wordlist.edit', compact('word', 'categories', 'answers'));
+    }
+
+    public function update(WordRequest $request, $id)
+    {
+        $inputs = $request->only('category_id', 'word', 'description', 'answer', 'check_answer');
+
+        try {
+            $word = Word::findOrFail($id);
+        } catch (ModelNotFoundException $ex) {
+            return $ex;
+        }
+
+        $answerId =  $word->options()->get()->pluck('id');
         $answerIdDelete = [];
-        foreach ($answerId as $id) {
-            if (!in_array($id, $inputs['idOptions'])) {
-                $answerIdDelete[] = $id;
+        foreach ($answerId as $aId) {
+            if (!in_array($aId, array_keys($inputs['answer']))) {
+                $answerIdDelete[] = $aId;
             }
         }
 
@@ -80,31 +98,32 @@ class WordController extends Controller
             Option::whereIn('id', $answerIdDelete)->delete();
         }
 
-        try {
-            $word = Word::findOrFail($inputs['id']);
-        } catch (ModelNotFoundException $ex) {
-            return $ex;
+        foreach (array_values($request->answer) as $index => $option) {
+            if ($index == $inputs['check_answer']) {
+                $inputs['check_answer'] = $option['ans'];
+            }
         }
 
         $word->update([
             'category_id' => $inputs['category_id'],
             'word' => $inputs['word'],
             'description' => $inputs['description'],
-            'answer' => $inputs['answer'],
+            'answer' => $inputs['check_answer'],
         ]);
-        foreach ($inputs['options'] as $key => $option) {
-            Option::updateOrCreate(['word_id' => $inputs['id'], 'id' => $key], ['option' => $option]);
+        
+        foreach ($inputs['answer'] as $key => $option) {
+            Option::updateOrCreate(['word_id' => $id, 'id' => $key], ['option' => $option['ans']]);
         }
-
+        
         if (!$word) {
-            return response()->json([
-                'message' => trans('settings.error_message'),
-            ]);
+            return redirect()->back()
+                ->with('status', 'danger')
+                ->with('message', trans('settings.error_message'));
         }
 
-        return response()->json([
-            'message' => trans('settings.success_message'),
-        ]);
+        return redirect()->action('Admin\WordController@index')
+            ->with('status', 'success')
+            ->with('message', trans('settings.success_message'));
     }
 
     public function destroy(Request $request)
@@ -135,14 +154,10 @@ class WordController extends Controller
                 'message' => trans('settings.error_message'),
             ]);
         }
-        
-        $checkAnswer = Word::where('id', $request->id)->pluck('answer');
-        $answers = Option::where('word_id', $request->id)->get();
-        
+
         if (!isset($request->numItems)){
             return view('admin.wordlist.content', [
-                'checkAnswer' => $checkAnswer,
-                'answers' => $answers,
+                'numEdit' => $request->numEdit,
             ])->render();
         }
 

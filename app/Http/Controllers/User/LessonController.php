@@ -41,13 +41,15 @@ class LessonController extends Controller
                ->with('message', config('settings.message_fail'));
         }
 
-        return redirect()->action('User\LessonController@index');
+        return redirect()->action('User\LessonController@index')
+            ->with('status', 'success')
+            ->with('message', trans('settings.success_message'));
     }
     
     public function show($id)
     {
         $lesson = Lesson::where('id', $id)->with('category', 'test')->first();
-        if (!isset($lesson) || $lesson->result) {
+        if (!isset($lesson) || ($lesson->created_at != $lesson->updated_at)) {
             return redirect()->action('HomeController@error404');
         }
 
@@ -66,9 +68,6 @@ class LessonController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->only('word', 'time');
-        if (!isset($input['word'])) {
-            return redirect()->action('User\LessonController@index');
-        }
 
         $start = Carbon::parse($input['time']);
         $end = Carbon::now();
@@ -111,7 +110,9 @@ class LessonController extends Controller
 
         $activityCategory = $this->addActivityCategory($lesson);
 
-        return redirect()->action('User\LessonController@index');
+        return redirect()->action('User\LessonController@index')            
+            ->with('status', 'success')
+            ->with('message', trans('settings.complete_message'));
     }
 
     protected function addActivityCategory($lesson)

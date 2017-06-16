@@ -11,7 +11,7 @@ class LessonController extends Controller
 {
     public function index()
     {
-        $lessons = Lesson::with('user', 'category')->paginate(config('settings.paginate_number'));
+        $lessons = Lesson::with('user', 'category')->get();
 
         return view('admin.lesson.index', compact('lessons'));
     }
