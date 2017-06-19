@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Activity;
+use App\Models\Lesson;
 use App\Models\Test;
 
 class CategoryController extends Controller
@@ -83,11 +85,18 @@ class CategoryController extends Controller
                 'message' => trans('settings.error_message'),
             ]);
         }
-        
-        $test = Test::where('category_id', $request->id)->delete();
-        $category = Category::where('id', $request->id)->delete();
 
-        if ($test && $category) {
+        $category = Category::where('id', $request->id)->delete();
+        $activity = Activity::where('action_id', $request->id)->where('action_type', 'like', '%category%')->delete();
+        $actionId = Activity::where('action_type', 'like', '%lesson%')->pluck('action_id');
+        
+        if ($activity && $category) {
+            foreach ($actionId as $value) {
+                if (empty(Lesson::find($value))) {
+                    Activity::where('action_id', $value)->where('action_type', 'like', '%lesson%')->delete();
+                }
+            }
+
             return response()->json([
                 'message' => trans('settings.success_message'),
             ]);

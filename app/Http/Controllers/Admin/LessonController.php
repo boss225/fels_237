@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
+use App\Models\Activity;
 
 
 class LessonController extends Controller
@@ -24,9 +25,10 @@ class LessonController extends Controller
             ]);
         }
         
+        $activity = Activity::where('action_id', $request->id)->where('action_type', 'like', '%lesson%')->delete();
         $lesson = Lesson::where('id', $request->id)->delete();
 
-        if (!$lesson) {
+        if (!$activity && !$lesson) {
             return response()->json([
                 'message' => trans('settings.error_message'),
             ]);

@@ -114,3 +114,11 @@ ul.pagination > li.active > span, .disabled {
     border: 1px solid rgba(0,0,0,.15);
     border-radius: .25rem;
 }
+
+.radio .answer {
+    color: red;
+}
+
+a.list-group-item-action:hover {
+    color: #014c8c;
+}

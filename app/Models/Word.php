@@ -29,4 +29,9 @@ class Word extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
 }

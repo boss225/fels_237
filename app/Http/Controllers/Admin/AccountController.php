@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
+use Auth;
 use App\Models\User;
-use App\Models\Social;
+use App\Models\Relationship;
 
 class AccountController extends Controller
 {
     public function index()
     {
-        $accounts = User::all();
+        $accounts = User::whereNotIn('id', [Auth::user()->id])->get();
 
         return view('admin.user.index', compact('accounts'));
     }
@@ -25,10 +26,10 @@ class AccountController extends Controller
             ]);
         }
         
-        $social = Social::where('user_id', $request->id)->delete();
+        $relationship = Relationship::where('target_id', $request->id)->delete();
         $user = User::where('id', $request->id)->delete();
 
-        if ($social && $user) {
+        if ($relationship && $user) {
             return response()->json([
                 'message' => trans('settings.success_message'),
             ]);

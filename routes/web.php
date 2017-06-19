@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('word/category/{id}', 'WordController@wordsCategory');
         Route::post('word/category/{id}/filter', 'WordController@wordsCategoryFilter');
         Route::resource('lesson', 'LessonController', ['only' => ['index', 'store', 'show', 'update']]);
+        Route::get('lesson/{id}/view', 'LessonController@view'); 
         Route::get('followers', 'UserController@followers'); 
         Route::get('following', 'UserController@following');
         Route::post('add/follow', 'UserController@addRelationship'); 
