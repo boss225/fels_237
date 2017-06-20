@@ -30,12 +30,16 @@
             </div>
             <ul class="list-group list-group-bordered overflow">      
             @forelse ($userActivities as $userActivity)
-                <li class="list-group-item">
+                <a class="list-group-item list-group-item-action" href="{{ 
+                        $userActivity->action_type != config('settings.action.type_category') ?
+                        action('User\LessonController@view', $userActivity->action_id) : 
+                        action('User\WordController@wordsCategory', $userActivity->action_id)
+                    }}">
                     <div class="media">
                         <div class="media-left">
-                            <a class="avatar">
+                            <div class="avatar">
                                 <img src="{{ Auth::user()->avatar }}" class="height-auto">
-                            </a>
+                            </div>
                         </div>
                         <div class="media-body">
                         @if ($userActivity->action_type == config('settings.action.type_category'))
@@ -60,7 +64,7 @@
                             <br><small>{{ $userActivity->created_at->format('Y-m-d G:i a') }}</small>
                         </div>
                     </div>
-                </li>
+                </a>
             @empty
                 <li class="list-group-item">
                     {{ trans('settings.home.no_activity') }}
@@ -74,7 +78,11 @@
             </div>
             <ul class="list-group list-group-bordered overflow">      
             @forelse ($userFollowActivities as $userFollowActivity)
-                <li class="list-group-item">
+                <a class="list-group-item list-group-item-action" href="{{ 
+                        $userFollowActivity->action_type != config('settings.action.type_category') ?
+                        action('User\LessonController@view', $userFollowActivity->action_id) : 
+                        action('User\WordController@wordsCategory', $userFollowActivity->action_id)
+                    }}">
                     <div class="media">
                         <div class="media-left">
                             <a class="avatar">
@@ -104,7 +112,7 @@
                             <br><small>{{ $userFollowActivity->created_at->format('Y-m-d G:i a') }}</small>
                         </div>
                     </div>
-                </li>
+                </a>
             @empty
                 <li class="list-group-item">
                     {{ trans('settings.home.no_activity') }}

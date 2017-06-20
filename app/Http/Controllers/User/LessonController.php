@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Category;
 use App\Models\Lesson;
 use App\Models\Word;
+use App\Models\Result;
 use App\Models\Activity;
 use Auth;
 use Carbon\Carbon;
@@ -49,7 +50,7 @@ class LessonController extends Controller
     public function show($id)
     {
         $lesson = Lesson::where('id', $id)->with('category', 'test')->first();
-        if (!isset($lesson) || ($lesson->created_at != $lesson->updated_at)) {
+        if (!isset($lesson)) {
             return redirect()->action('HomeController@error404');
         }
 
@@ -58,11 +59,16 @@ class LessonController extends Controller
         $category = [$lesson->category->id];
         $timer = Carbon::now();
         $questionNumber = $lesson->test->question_number;
-
+        
         $questions = Word::with('options')->whereIn('category_id', $category)
             ->take($questionNumber)->inRandomOrder()->get();
-        
-        return view('layouts.test', compact('questions', 'createdAt', 'categoryName', 'timer'));       
+
+        return view('user.exam.index', compact(
+            'questions', 
+            'createdAt', 
+            'categoryName', 
+            'timer'
+        ));       
     }
 
     public function update(Request $request, $id)
@@ -100,19 +106,34 @@ class LessonController extends Controller
             'result' => $result,
         ]);
 
-        if ($result != config('settings.lesson.default_result')) {
-            $inputActivities = [
-                'user_id' => Auth::user()->id,
-                'action_type' => 'lesson_' . $memories,
-            ];
-            $lesson->activity()->create($inputActivities);
-        }
+        $inputActivities = [
+            'user_id' => Auth::user()->id,
+            'action_type' => 'lesson_' . $memories,
+        ];
+        $lesson->activity()->create($inputActivities);
 
         $activityCategory = $this->addActivityCategory($lesson);
+        $resultLesson = $this->saveResultLesson($lesson, $input['word']);
 
         return redirect()->action('User\LessonController@index')            
             ->with('status', 'success')
             ->with('message', trans('settings.complete_message'));
+    }
+
+    public function view($id)
+    {
+        try {
+            $lesson = Lesson::findOrFail($id)->with('category')->first();            
+        } catch (ModelNotFoundException $ex) {
+            return redirect()->action('HomeController@error404');
+        }
+
+        $createdAt = $lesson->created_at->format('Y-m-d G:i a');
+        $categoryName = $lesson->category->title;
+        $results = Result::where('lesson_id', $id)->pluck('word_id');
+        $viewTests = Word::with('options', 'results')->whereIn('id', $results)->get()->sortBy('results');
+
+        return view('user.exam.index', compact('viewTests', 'createdAt', 'categoryName'));   
     }
 
     protected function addActivityCategory($lesson)
@@ -134,5 +155,17 @@ class LessonController extends Controller
             Activity::create($inputActivities);
         }
 
+    }
+
+    protected function saveResultLesson($lesson, $inputs)
+    {
+        foreach ($inputs as $key => $answer) {
+            $results[] = [
+                'word_id' => $key,
+                'user_answer' => $answer,
+            ];
+        }
+
+        $lesson->result()->createMany($results);
     }
 }

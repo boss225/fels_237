@@ -70,8 +70,8 @@
                             {{ trans('settings.layout.user.btn_start') }}
                         </a>
                     @else
-                        <a class="btn btn-primary btn-sm disabled">
-                            {{ trans('settings.layout.user.btn_start') }}
+                        <a href="{{ action('User\LessonController@view', $lesson->id) }}" class="btn btn-success btn-sm">
+                            {{ trans('settings.layout.user.btn_view') }}
                         </a>
                     @endif
                     </td>

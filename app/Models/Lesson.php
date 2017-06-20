@@ -34,4 +34,9 @@ class Lesson extends Model
     {
         return $this->hasOne(Activity::class, 'action_id');
     }
+
+    public function result()
+    {
+        return $this->hasOne(Result::class, 'lesson_id');
+    }
 }
