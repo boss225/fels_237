@@ -37,9 +37,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::resource('categories', 'CategoryController', ['expect' => ['show', 'edit', 'create']]);
-        Route::resource('accounts', 'AccountController', ['only' => ['index', 'destroy']]);
+        Route::resource('accounts', 'AccountController', ['only' => ['index', 'destroy', 'edit', 'update']]);
         Route::resource('word-list', 'WordController');
         Route::resource('lesson', 'LessonController', ['only' => ['index', 'destroy']]);
         Route::get('word-content', 'WordController@wordContent');        
+        Route::get('import-file', 'ExcelController@getImport');        
+        Route::post('import-file', 'ExcelController@postImport');        
+        Route::get('export', 'ExcelController@export');        
     });
 });

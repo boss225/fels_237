@@ -27,6 +27,13 @@ class CategoryController extends Controller
             ]);
         }
 
+        $checkCategory = Category::where('title', $request->title)->get();
+        if (count($checkCategory) > 0) {
+            return response()->json([
+                'message' => trans('settings.error_message'),
+            ]);
+        }
+
         $test = new Test([
             'question_number' => $request->question_number,
         ]);

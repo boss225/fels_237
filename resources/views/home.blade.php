@@ -80,35 +80,34 @@
             @forelse ($userFollowActivities as $userFollowActivity)
                 <a class="list-group-item list-group-item-action" href="{{ 
                         $userFollowActivity->action_type != config('settings.action.type_category') ?
-                        action('User\LessonController@view', $userFollowActivity->action_id) : 
-                        action('User\WordController@wordsCategory', $userFollowActivity->action_id)
+                        action('User\LessonController@view', $userFollowActivity->action_id) : ''
                     }}">
                     <div class="media">
                         <div class="media-left">
-                            <a class="avatar">
+                            <div class="avatar">
                                 <img src="{{ $userFollowActivity->user->avatar }}" class="height-auto">
-                            </a>
+                            </div>
                         </div>
                         <div class="media-body">
-                        @if ($userFollowActivity->action_type == config('settings.action.type_category'))
-                            <small>{{ trans('settings.activities.category', [
-                                        'userName' => $userFollowActivity->user->name,
-                                        'nameCategory' => $categories[$userFollowActivity->action_id],
-                                    ]) }}
-                            </small>
-                        @else
-                            @foreach ($userFollowLessons as $userFollowLesson)
-                                @if ($userFollowActivity->action_id == $userFollowLesson->id)
-                                    <small>{{ trans('settings.activities.lesson', [
-                                                'userName' => $userFollowActivity->user->name,
-                                                'result' => $userFollowLesson->result,
-                                                'wordMemory' => substr($userFollowActivity->action_type, config('settings.substr_actionType')),
-                                                'nameCategory' => $userFollowLesson->category->title,
-                                            ]) }}
-                                    </small>
-                                @endif
-                            @endforeach
-                        @endif
+                            @if ($userFollowActivity->action_type == config('settings.action.type_category'))
+                                <small>{{ trans('settings.activities.category', [
+                                            'userName' => $userFollowActivity->user->name,
+                                            'nameCategory' => $categories[$userFollowActivity->action_id],
+                                        ]) }}
+                                </small>
+                            @else
+                                @foreach ($userFollowLessons as $userFollowLesson)
+                                    @if ($userFollowActivity->action_id == $userFollowLesson->id)
+                                        <small>{{ trans('settings.activities.lesson', [
+                                                    'userName' => $userFollowActivity->user->name,
+                                                    'result' => $userFollowLesson->result,
+                                                    'wordMemory' => substr($userFollowActivity->action_type, config('settings.substr_actionType')),
+                                                    'nameCategory' => $userFollowLesson->category->title,
+                                                ]) }}
+                                        </small>
+                                    @endif
+                                @endforeach
+                            @endif
                             <br><small>{{ $userFollowActivity->created_at->format('Y-m-d G:i a') }}</small>
                         </div>
                     </div>

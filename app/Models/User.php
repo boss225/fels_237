@@ -27,7 +27,8 @@ class User extends Authenticatable
         'avatar', 
         'cover', 
         'location', 
-        'note'
+        'note',
+        'role',
     ];
 
     protected $guarded = [
